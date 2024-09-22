@@ -4,8 +4,9 @@ import com.vinivhs.demo_park_api.entity.Usuario;
 import com.vinivhs.demo_park_api.web.dto.UsuarioCreateDto;
 import com.vinivhs.demo_park_api.web.dto.UsuarioResponseDto;
 import org.modelmapper.ModelMapper;
-
 import org.modelmapper.TypeMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class UsuarioMapper {
 
@@ -21,6 +22,11 @@ public class UsuarioMapper {
                 mapper -> mapper.map(src -> role, UsuarioResponseDto::setRole)
         );
         return mapperMain.map(user, UsuarioResponseDto.class);
+    }
+
+    public static List<UsuarioResponseDto> toListDto(List<Usuario> usuario){
+        return usuario.stream().map(user -> toDto(user)).collect(Collectors.toList());
+
     }
 
 }
