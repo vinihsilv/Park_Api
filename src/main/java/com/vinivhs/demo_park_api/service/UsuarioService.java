@@ -4,6 +4,7 @@ package com.vinivhs.demo_park_api.service;
 import com.vinivhs.demo_park_api.Exception.UsernameUniqueViolationException;
 import com.vinivhs.demo_park_api.entity.Usuario;
 import com.vinivhs.demo_park_api.repository.UsuarioRepository;
+import com.vinivhs.demo_park_api.web.exception.EntityNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,7 @@ public class UsuarioService {
     @Transactional(readOnly  = true)
     public Usuario buscarPorId(long id) {
         return usuarioRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Usuário não encontrado")
+                () -> new EntityNotFoundException(String.format("Usuário id=%s não encontrado", id))
         );
     }
 

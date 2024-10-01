@@ -16,8 +16,20 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ApiExceptionHandler {
 
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<ErrorMessage> EntityNotFoundException(RuntimeException ex, HttpServletRequest request){
+
+        log.error("Api Error - ", ex);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(new ErrorMessage(request, HttpStatus.NOT_FOUND, ex.getMessage()));
+
+
+    }
+
     @ExceptionHandler(UsernameUniqueViolationException.class)
-    public ResponseEntity<ErrorMessage> MethodArgumentNotValidException(RuntimeException ex,
+    public ResponseEntity<ErrorMessage> UniqueViolationException(RuntimeException ex,
                                                                         HttpServletRequest request){
 
         log.error("Api Error - ", ex);
