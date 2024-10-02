@@ -21,10 +21,10 @@ public class Usuario  implements  Serializable{
     @Column(name = "id")
     private long id;
 
-    @Column(name = "username", nullable = false, unique = true, length = 100)
+    @Column(name = "password", nullable = false, length = 100)
     private String password;
 
-    @Column(name = "password", nullable = false, length = 200)
+    @Column(name = "username", nullable = false,unique = true, length = 200)
     private String username;
 
     @Enumerated(EnumType.STRING)
