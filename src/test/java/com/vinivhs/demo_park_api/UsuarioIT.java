@@ -12,6 +12,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import java.util.List;
+
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Sql(scripts = "/sql/usuarios/usuarios-insert.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
@@ -213,6 +215,20 @@ public class UsuarioIT {
 
         org.assertj.core.api.Assertions.assertThat(responseBody).isNotNull();
         org.assertj.core.api.Assertions.assertThat(responseBody.getStatus()).isEqualTo(422);
+
+
+    }
+
+    @Test
+    public void retornarListaDeUsuariops_Retornar(){
+        List<UsuarioResponseDto> responseBody = testClient
+                .get()
+                .uri("/api/v1/usuarios")
+                .exchange().expectStatus().isOk().expectBodyList(UsuarioResponseDto.class).returnResult().getResponseBody();
+
+
+        org.assertj.core.api.Assertions.assertThat(responseBody).isNotNull();
+        org.assertj.core.api.Assertions.assertThat(responseBody.size()).isEqualTo(3);
 
 
     }
